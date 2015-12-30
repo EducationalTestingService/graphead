@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+
+    <script type="text/javascript" src="https://code.createjs.com/easeljs-0.8.0.min.js"></script>
+    <script type="text/javascript">var cjs = createjs;</script>
+
+    <script type="text/javascript" src="Grid.js"></script>
+    <script type="text/javascript" src="regression.min.js"></script>
+    <script type="text/javascript" src="Graphead.js"></script>
+
+    <script type="text/javascript">
+
+window.onload = init;
+
+function init(){
+    var g = new Graphead();
+    g.init("canvas1", "my_graph", {});
+}
+
+    </script>
+  </head>
+  <body>
+
+        <canvas id="canvas1" width="470" height="470"></canvas>
+
+        The simplest configuration possible. Not very exciting is it?<br/>
+  </body>
+</html>

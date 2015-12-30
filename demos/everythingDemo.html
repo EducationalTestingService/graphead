@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+<style type="text/css">
+body { 
+    font-family: 'Open Sans', Arial;
+    font-size:14px;
+    background-image:url('bg.png');
+}
+
+.container { 
+    margin: 20px auto 0px auto;
+    border:1px solid #aaa;
+    width:1040px; 
+    padding:10px;
+    overflow:auto;
+}
+
+#canvasContainer {
+    float:left;
+    width:470px;
+    height:570px;
+    padding:20px;
+    background-color:#fff;
+    box-shadow: 1px 1px 2px 0px #222;
+}
+
+canvas { 
+    cursor:pointer; 
+    display:block; 
+}
+
+#menu {
+    float:left;
+    position:relative;
+    width:490px;
+    height:590px;
+    margin-left:20px;
+    padding:10px;
+    background-color:#fff;
+    box-shadow: 1px 1px 2px 0px #222;
+}
+
+.menuLink {
+    font-size:14px;
+    color:#003300;
+    cursor:pointer;
+    display:inline-block;
+    margin-top:2px;
+}
+.menuLink:hover, .menuLink:active {
+    color:#336600;
+    text-decoration:underline;
+}
+.menuLink.red:hover {
+    color:#cc0000;
+    text-decoration:underline;
+}
+
+ul { list-style-type: square; margin-top:5px; }
+li { color:orange; }
+</style>
+
+    <script type="text/javascript" src="https://code.createjs.com/easeljs-0.8.0.min.js"></script>
+    <script type="text/javascript">var cjs = createjs;</script>
+
+    <script type="text/javascript" src="Grid.js"></script>
+    <script type="text/javascript" src="regression.min.js"></script>
+    <script type="text/javascript" src="Graphead.js"></script>
+
+    <script type="text/javascript">
+
+window.onload = init;
+
+//--------------------------------------------------------------------------- init
+function init(){
+    window.g1 = new Graphead();
+    window.g1.init("canvas1", "YourResponseID", {unitSize:40});
+    window.g1.addLayer([], 'layerOne', false, { color: '#E80C7A', fill: '#E80C7A', size: 16 });
+    window.g1.addLayer([], 'layerTwo', false, { color: '#333333', fill: '#333333', strokeSize:2 });
+    window.g1.addLayer([], 'layerThree', false, { color: '#669900', fill: '#669900', strokeSize:2 });
+
+
+    //stop background dragging on touch devices 
+    document.addEventListener("touchmove", function(e){ e.preventDefault(); }, false);
+}
+
+    </script>
+  </head>
+  <body>
+
+    <div id="mainContainer" class="container">
+
+      
+      <div id="canvasContainer">
+        <canvas id="canvas1" width="470" height="470"></canvas>
+      </div>
+
+
+
+      <div id="menu">
+        <br />
+
+        <u>Enable Graph-Click Action</u>:
+        <ul>
+          <li><span class="menuLink" onclick="window.g1.enableClickAction('layerOne','dot')">Click Dots</span></li>
+          <li><span class="menuLink" onclick="window.g1.enableClickAction('layerOne','line', 'extended', false)">Single Line</span></li>
+          <li><span class="menuLink" onclick="window.g1.enableClickAction('layerOne','line', 'extended', true)">Multiple Lines</span></li>
+          <li><span class="menuLink" onclick="window.g1.enableClickAction('layerOne','line', 'extended', false, 'label')">Single Line w/ label</span></li>
+          <li><span class="menuLink" onclick="window.g1.enableClickAction('layerOne','line', 'segment', false)">Single Segment</span></li>
+          <li><span class="menuLink" onclick="window.g1.enableClickAction('layerOne','line', 'segment', true)">Multiple Segments</span></li>
+          <li><span class="menuLink" onclick="window.g1.enableClickAction('layerOne','connected')">Connected Segments</span></li>
+         <li><span class="menuLink" onclick="window.g1.enableClickAction('layerOne','connected', 'label')">Connected Segments w/ Label</span></li>
+          <li><span class="menuLink" onclick="window.g1.enableClickAction('layerOne','piecewise')">Piecewise Segments</span></li>
+          <li><span class="menuLink" onclick="window.g1.enableClickAction('layerOne','curve')">Curve Segment</span></li>
+        </ul>
+
+
+        <u>Regressions</u>:
+        <ul>
+          <li><span class="menuLink" onclick="window.g1.addCurve('layerOne')">Add Curve</span></li>
+          <li><span class="menuLink" onclick="window.g1.addRegression('layerOne', 'layerTwo', 'linear')">Add Linear Regression</span></li>
+          <li><span class="menuLink" onclick="window.g1.addRegression('layerOne', 'layerTwo', 'quadratic')">Add Quadratic Regression</span></li>
+        </ul>
+
+
+        <u>Button-Push Action</u>:
+
+        <ul>
+          <li><span class="menuLink" onclick="window.g1.addLine('layerOne')">Add New Line</span></li>
+          <li><span class="menuLink" onclick="window.g1.addSegment('layerOne')">Add New Segment</span></li>
+         <li><span class="menuLink" onclick="window.g1.addLine('layerOne', 'label')">Add Line w/ Label</span></li>
+        </ul>
+
+        <div style="width:200px; margin-left:300px;">
+          <ul style="list-style-type:square">
+            <li><span class="menuLink red" onclick="window.g1.undo()">UNDO</span></li>
+            <li><span class="menuLink red" onclick="window.g1.startOver()">START OVER</span></li>
+          </ul>
+        </div>
+
+        
+      </div>
+    </div>
+
+  </body>
+</html>
