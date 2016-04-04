@@ -1030,6 +1030,8 @@ Graphead.prototype.plotRegression = function(arr, layer, regressionType){
 
     if(regressionType == "quadratic"){
 
+        formattedArr = this.normalizePoints(formattedArr); // normalize
+
         var r = regression("polynomial", formattedArr, 2); // 2 = degree of polynomial
 
         var quadPoints = [];
@@ -1039,6 +1041,7 @@ Graphead.prototype.plotRegression = function(arr, layer, regressionType){
         }
 
         quadPoints = plotSmooveCurve(quadPoints);
+        quadPoints = this.denormalizePoints(quadPoints); // denormalize
 
         for(var i=0; i < (quadPoints.length - 1); i++){
             
@@ -1311,6 +1314,48 @@ Graphead.prototype.getFlattenedLineArray = function(layerName){
 Graphead.prototype.getAllUniqueDataPoints = function(layerName){
 
     return removeDuplicateDataPts( this.getAllPoints(layerName) );
+};
+
+
+//--------------------------------------------------------------------------- normalizePoints
+// for regressions, this works only on points structured as an array [x,y]
+// NOT complex point objects
+Graphead.prototype.normalizePoints = function(arr){
+
+    var scaleX = this.grid.get("scaleFactorX");
+    var scaleY = this.grid.get("scaleFactorY");
+
+    var newArr = [];
+
+    for(var i=0; i < arr.length; i++){
+        var p = arr[i];
+        var newX = p[0]/scaleX;
+        var newY = p[1]/scaleY;
+        newArr.push([newX, newY]);
+    };
+
+    return newArr;
+};
+
+
+//--------------------------------------------------------------------------- denormalizePoints
+// for regressions, this works only on points structured as an array [x,y]
+// NOT complex point objects
+Graphead.prototype.denormalizePoints = function(arr){
+
+    var scaleX = this.grid.get("scaleFactorX");
+    var scaleY = this.grid.get("scaleFactorY");
+
+    var newArr = [];
+
+    for(var i=0; i < arr.length; i++){
+        var p = arr[i];
+        var newX = p[0] * scaleX;
+        var newY = p[1] * scaleY;
+        newArr.push([newX, newY]);
+    };
+
+    return newArr;
 };
 
 
